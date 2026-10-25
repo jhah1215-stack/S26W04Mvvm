@@ -25,67 +25,57 @@ import androidx.compose.ui.unit.sp
 fun Counter(
     modifier: Modifier = Modifier,
     count: Int,
-    onIncrement: () -> Unit,
-    onDecrement: () -> Unit,
+    onAdd: () -> Unit,
+    onSub: () -> Unit,
     onReset: () -> Unit,
 ) {
-    var expanded by retain { mutableStateOf(false)}
+    var expanded by retain { mutableStateOf(false) }
 
     Column(
-        modifier = modifier // Modifier 사용하면 윗 여백 없음
+        modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
-            .background(Color(0XFFE9F680)),
+            .background(Color(0xFFE9F680)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = count.toString(),
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxWidth()
-                .background(Color(0xFFFE7A36)),
-            color = Color.White,
-            fontSize = 100.sp,
+                .background(Color(0xFFFF7F32)),
             textAlign = TextAlign.Center,
+            fontSize = 100.sp,
+            color = Color.White
         )
 
-        Row {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
             Button(
-                modifier = Modifier.weight(1f),
-                onClick = {
-                    onIncrement()
-                }
+                onClick = onAdd,
+                modifier = Modifier.weight(1f)
             ) {
-                Text("+", fontSize = 30.sp)
+                Text("+", fontSize = 24.sp)
             }
 
             if (expanded) {
-                Button(
-                    onClick = {
-                        onDecrement()
-                        expanded = false
-                    }
-                ) {
-                    Text("-", fontSize = 30.sp)
+                Button(onClick = {
+                    onSub()
+                    expanded = false
+                }) {
+                    Text("-", fontSize = 24.sp)
                 }
-
-                Button(
-                    onClick = {
-                        onReset()
-                        expanded = false
-                    }
-                ) {
-                    Text("0", fontSize = 30.sp)
+                Button(onClick = {
+                    onReset()
+                    expanded = false
+                }) {
+                    Text("0", fontSize = 24.sp)
                 }
-            }
-            else {
-                Button(
-                    onClick = {
-                        expanded = true
-                    }
-                ) {
-                    Text("...", fontSize = 30.sp)
+            } else {
+                Button(onClick = { expanded = true }) {
+                    Text("...", fontSize = 24.sp)
                 }
             }
         }
